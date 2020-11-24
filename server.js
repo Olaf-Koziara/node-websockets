@@ -30,3 +30,14 @@ wss.on("connection", (ws) => {
     client.send(JSON.stringify({ uid: client.id }));
   });
 });
+ws.on("message", (data) => {
+  wss.clients.forEach((client) => {
+    if (client.readyState === WebSocket.OPEN && client !== ws) {
+      const uid = JSON.parse(data).uid;
+
+      if (uid === client.id) {
+        client.send(data);
+      }
+    }
+  });
+});
