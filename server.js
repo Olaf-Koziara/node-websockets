@@ -29,15 +29,15 @@ wss.on("connection", (ws) => {
     console.log(client.id);
     client.send(JSON.stringify({ uid: client.id }));
   });
-});
-ws.on("message", (data) => {
-  wss.clients.forEach((client) => {
-    if (client.readyState === WebSocket.OPEN && client !== ws) {
-      const uid = JSON.parse(data).uid;
+  ws.on("message", (data) => {
+    wss.clients.forEach((client) => {
+      if (client.readyState === WebSocket.OPEN && client !== ws) {
+        const uid = JSON.parse(data).uid;
 
-      if (uid === client.id) {
-        client.send(data);
+        if (uid === client.id) {
+          client.send(data);
+        }
       }
-    }
+    });
   });
 });
