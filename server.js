@@ -23,12 +23,6 @@ wss.on("connection", (ws) => {
   console.log("Client connected");
   ws.on("close", () => console.log("Client disconnected"));
   wss.clients.forEach((client) => {
-    if (client !== ws) {
-      const uid = JSON.parse(data).uid;
-
-      if (uid === client.id) {
-        client.send(data);
-      }
-    }
+    client.send(JSON.stringify({ uid: "11se" }));
   });
 });
